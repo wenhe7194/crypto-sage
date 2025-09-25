@@ -61,34 +61,28 @@ def proj_scalarmult(n, P):
 
 
 P_affine = G
-P_proj = (G.xy()[0], G.xy()[1], K(1))
-
-print("Alice")
+g_proj = (G.xy()[0], G.xy()[1], K(1))
 x = 65537 
 print(f"Alicet x: {x}")
 h_A_proj = proj_scalarmult(x, g_proj)
 h_A_affine = proj_to_affine(h_A_proj)
-print(f"h_A: ...{str(h_A_affine.xy()[0])[-20:]}")
+print(f"h_A: （{hex(h_A_affine.xy()[0])[:]},{hex(h_A_affine.xy()[1])[:]}）")
 
-print("Bob")
-y = 2^32
+y = 24100
 print(f"Bob y: {y}")
 h_B_proj = proj_scalarmult(y, g_proj)
 h_B_affine = proj_to_affine(h_B_proj)
-print(f"h_B: {str(h_B_affine.xy()[0])[-20:]}")
+print(f"h_B: （{hex(h_B_affine.xy()[0])[:]},{hex(h_B_affine.xy()[1])[:]}）")
 
-
-# --- 共享密钥生成 ---
 h_B_proj_received = (h_B_affine.xy()[0], h_B_affine.xy()[1], K(1))
 k_A_proj = proj_scalarmult(x, h_B_proj_received)
 k_A_affine = proj_to_affine(k_A_proj)
-print(f"k_A: {str(k_A_affine.xy()[0])[-20:]}")
+print(f"k_A: （{hex(k_A_affine.xy()[0])[:]},{hex(k_A_affine.xy()[1])[:]}）")
 
 h_A_proj_received = (h_A_affine.xy()[0], h_A_affine.xy()[1], K(1))
 k_B_proj = proj_scalarmult(y, h_A_proj_received)
 k_B_affine = proj_to_affine(k_B_proj)
-print(f"k_B: {str(k_B_affine.xy()[0])[-20:]}")
-print("-" * 60)
+print(f"k_B: （{hex(k_B_affine.xy()[0])[:]},{hex(k_B_affine.xy()[1])[:]}）")
 
 
 print("验证")
